@@ -28,14 +28,17 @@
         <servlet.jsp-api>2.3.1</servlet.jsp-api>
         <hibernate.entitymanager>4.3.6.Final</hibernate.entitymanager>
         <hsqldb>2.3.2</hsqldb>
+        <jstl>1.2</jstl>
     </properties>
 
     <dependencies>
-
-
-
+        <!--JSTL-->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>${jstl}</version>
+        </dependency>
         <!--WEB-API-->
-
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
@@ -48,14 +51,12 @@
             <version>${servlet.jsp-api}</version>
             <scope>provided</scope>
         </dependency>
-
         <!--TILES-->
         <dependency>
             <groupId>org.apache.tiles</groupId>
             <artifactId>tiles-core</artifactId>
             <version>${appache.tiles}</version>
         </dependency>
-
         <dependency>
             <groupId>org.apache.tiles</groupId>
             <artifactId>tiles-jsp</artifactId>
@@ -67,15 +68,12 @@
             <artifactId>hibernate-entitymanager</artifactId>
             <version>${hibernate.entitymanager}</version>
         </dependency>
-
         <!--HSQLDB-->
         <dependency>
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
             <version>${hsqldb}</version>
         </dependency>
-
-
         <!--SPRING-->
         <!--
         Core utilities used by other modules.
