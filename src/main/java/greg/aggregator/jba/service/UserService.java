@@ -18,6 +18,7 @@ import java.util.List;
  * Created by greg on 05.06.15.
  */
 @Service
+@Transactional
 public class UserService {
 
     @Autowired
@@ -47,5 +48,10 @@ public class UserService {
         }
         user.setBlogs(blogs);
         return user;
+    }
+
+    public void save(User user) {
+        userRepository.save(user);
+
     }
 }

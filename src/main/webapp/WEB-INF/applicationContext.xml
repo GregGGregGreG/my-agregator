@@ -35,4 +35,5 @@
     <jpa:repositories base-package="greg.aggregator.jba.repository"
                       entity-manager-factory-ref="entityManagerFactory"
                       transaction-manager-ref="transactionManager"/>
+    <import resource="security.xml"/>
 </beans>
