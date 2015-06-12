@@ -1,5 +1,6 @@
 package greg.aggregator.controller;
 
+import greg.aggregator.jba.entity.Blog;
 import greg.aggregator.jba.entity.User;
 import greg.aggregator.jba.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import java.security.Principal;
 
 /**
  * Created by greg on 05.06.15.
@@ -20,8 +23,13 @@ public class UserController {
     private UserService userService;
 
     @ModelAttribute("user")
-    public User construct() {
+    public User constructUser() {
         return new User();
+    }
+
+    @ModelAttribute("blog")
+    public Blog constructBlog() {
+        return new Blog();
     }
 
     @RequestMapping("/users")
@@ -41,11 +49,17 @@ public class UserController {
         return "user-register";
     }
 
-    @RequestMapping(value = "/register",method = RequestMethod.POST)
-    public String doRegister(@ModelAttribute("user") User user){
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public String doRegister(@ModelAttribute("user") User user) {
         userService.save(user);
-        return "user-register";
+        return "redirect:/register.html?success=true";
     }
 
+    @RequestMapping("/account")
+    public String account(Model model, Principal principal) {
+        String name = principal.getName();
+        model.addAttribute("user", userService.findOneWithBlogs(name));
+        return "user-detail";
+    }
 
 }
