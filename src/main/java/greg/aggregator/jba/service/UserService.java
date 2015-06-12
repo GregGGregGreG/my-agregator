@@ -2,17 +2,22 @@ package greg.aggregator.jba.service;
 
 import greg.aggregator.jba.entity.Blog;
 import greg.aggregator.jba.entity.Item;
+import greg.aggregator.jba.entity.Role;
 import greg.aggregator.jba.entity.User;
 import greg.aggregator.jba.repository.BlogRepository;
 import greg.aggregator.jba.repository.ItemRepository;
+import greg.aggregator.jba.repository.RoleRepository;
 import greg.aggregator.jba.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by greg on 05.06.15.
@@ -29,6 +34,9 @@ public class UserService {
 
     @Autowired
     private ItemRepository itemRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     public List<User> findAll() {
         return userRepository.findAll();
@@ -51,7 +59,15 @@ public class UserService {
     }
 
     public void save(User user) {
-        userRepository.save(user);
+        user.setEnabled(true);
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        user.setPassword(encoder.encode(user.getPassword()));
 
+
+        Set<Role> roles = new HashSet<Role>();
+        roles.add(roleRepository.findByName("ROLE_USER"));
+        user.setRoles(roles);
+
+        userRepository.save(user);
     }
 }
