@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by greg on 05.06.15.
@@ -41,7 +42,7 @@ public class UserService {
     @Transactional
     public User findOneWithBlogs(int id) {
         User user = findOne(id);
-        List<Blog> blogs = blogRepository.findByUser(user);
+        Set<Blog> blogs = blogRepository.findByUser(user);
         for (Blog blog : blogs) {
             List<Item> items = itemRepository.findByBlog(blog, new PageRequest(0, 10, Sort.Direction.DESC, "publishedDate"));
             blog.setItems(items);

@@ -13,9 +13,9 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by greg on 05.06.15.
@@ -38,19 +38,12 @@ public class InitDbService {
 
     @PostConstruct
     public void init() {
-        Role roleUser = new Role();
-        roleUser.setName("ROLE_USER");
-        roleRepository.save(roleUser);
-
-        Role roleAdmin = new Role();
-        roleUser.setName("ROLE_ADMIN");
-        roleRepository.save(roleAdmin);
-
         User userAdmin = new User();
         userAdmin.setName("admin");
-        List<Role> roles = new ArrayList<Role>();
-        roles.add(roleAdmin);
-        roles.add(roleUser);
+        userAdmin.setPassword("admin");
+        Set<Role> roles = new HashSet<Role>();
+        roles.add(createRole("ROLE_USER"));
+        roles.add(createRole("ROLE_ADMIN"));
         userAdmin.setRoles(roles);
         userRepository.save(userAdmin);
 
@@ -73,10 +66,12 @@ public class InitDbService {
         item2.setLink("http://www.javavids.com");
         item2.setPublishedDate(new Date());
         itemRepository.save(item2);
-
-
-
     }
 
-
+    private Role createRole(String name) {
+        Role role = new Role();
+        role.setName(name);
+        roleRepository.save(role);
+        return role;
+    }
 }
