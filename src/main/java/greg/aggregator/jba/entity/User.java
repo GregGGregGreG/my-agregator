@@ -3,6 +3,7 @@ package greg.aggregator.jba.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -27,6 +28,6 @@ public class User {
     private Set<Role> roles;
 
     @OneToMany(mappedBy = "user")
-    private Set<Blog> blogs;
+    private List<Blog> blogs;
 
 }

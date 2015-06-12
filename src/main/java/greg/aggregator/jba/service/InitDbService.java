@@ -9,6 +9,7 @@ import greg.aggregator.jba.repository.ItemRepository;
 import greg.aggregator.jba.repository.RoleRepository;
 import greg.aggregator.jba.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -40,7 +41,8 @@ public class InitDbService {
     public void init() {
         User userAdmin = new User();
         userAdmin.setName("admin");
-        userAdmin.setPassword("admin");
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        userAdmin.setPassword(encoder.encode("admin"));
         Set<Role> roles = new HashSet<Role>();
         roles.add(createRole("ROLE_USER"));
         roles.add(createRole("ROLE_ADMIN"));

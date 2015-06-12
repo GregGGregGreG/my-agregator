@@ -7,7 +7,7 @@
            http://www.springframework.org/schema/security
            http://www.springframework.org/schema/security/spring-security.xsd">
 
-    <http  use-expressions="true">
+    <http use-expressions="true">
         <intercept-url pattern="/users**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/users/**" access="hasRole('ROLE_ADMIN')"/>
         <form-login login-page="/login.html"/>
@@ -16,6 +16,9 @@
 
     <authentication-manager>
         <authentication-provider>
+
+            <password-encoder ref="encoder"/>
+
             <jdbc-user-service data-source-ref="dataSource"
 
                                users-by-username-query="select user.name,user.password,true from user where name = ?"
@@ -30,4 +33,9 @@
             <!--<jdbc-user-service data-source-ref="dataSource"/>-->
         </authentication-provider>
     </authentication-manager>
+
+    <beans:bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+        <beans:constructor-arg name="strength" value="10"/>
+    </beans:bean>
+
 </beans:beans>
