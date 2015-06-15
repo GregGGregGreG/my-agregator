@@ -1,6 +1,7 @@
 package greg.aggregator.jba.entity;
 
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +14,8 @@ import java.util.List;
  */
 @Entity
 @Data
+@ToString(exclude = "users")
+
 public class Role {
     @Id
     @GeneratedValue
@@ -22,5 +25,6 @@ public class Role {
 
     @ManyToMany(mappedBy = "roles")
     private List<User> users;
+
 
 }

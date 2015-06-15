@@ -22,6 +22,7 @@
 
                         <div class="col-sm-10">
                             <form:input path="name" cssClass="form-control"/>
+                            <form:errors path="name" />
                         </div>
                     </div>
                     <div class="form-group">
@@ -29,6 +30,7 @@
 
                         <div class="col-sm-10">
                             <form:input path="url" cssClass="form-control"/>
+                            <form:errors path="url" />
                         </div>
                     </div>
                 </div>

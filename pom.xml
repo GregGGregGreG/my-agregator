@@ -51,7 +51,7 @@
             <version>${servlet.jsp-api}</version>
             <scope>provided</scope>
         </dependency>
-        <!--TILES-->
+        <!--APACHE TILES-->
         <dependency>
             <groupId>org.apache.tiles</groupId>
             <artifactId>tiles-core</artifactId>
@@ -67,6 +67,12 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
             <version>${hibernate.entitymanager}</version>
+        </dependency>
+        <!--HIBERNATE VALIDATOR-->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>5.1.3.Final</version>
         </dependency>
         <!--HSQLDB-->
         <dependency>

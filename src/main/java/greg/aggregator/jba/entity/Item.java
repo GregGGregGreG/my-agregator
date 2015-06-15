@@ -1,6 +1,7 @@
 package greg.aggregator.jba.entity;
 
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -10,6 +11,7 @@ import java.util.Date;
  */
 @Entity
 @Data
+@ToString(exclude = "blog")
 public class Item {
 
     @Id
