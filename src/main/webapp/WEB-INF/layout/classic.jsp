@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <title><tiles:getAsString name="title"/></title>
+
 </head>
 <body>
 <%@taglib prefix="tilesx" uri="http://tiles.apache.org/tags-tiles-extras" %>
@@ -45,7 +46,7 @@
                     </li>
                 </security:authorize>
                 <security:authorize access="isAuthenticated()">
-                    <li>
+                    <li class="${current =='user'?'active':''}">
                         <a href="<spring:url value="/account.html"/>">My account </a>
                     </li>
                     <li>
@@ -60,6 +61,7 @@
 <div class="container">
     <tiles:insertAttribute name="body"/>
     <br><br>
+
     <div style="text-align: center;">
         <tiles:insertAttribute name="footer"/>
     </div>

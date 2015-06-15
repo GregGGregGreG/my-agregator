@@ -2,6 +2,7 @@ package greg.aggregator.controller;
 
 import greg.aggregator.jba.entity.Blog;
 import greg.aggregator.jba.entity.User;
+import greg.aggregator.jba.service.BlogService;
 import greg.aggregator.jba.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private BlogService blogService;
 
     @ModelAttribute("user")
     public User constructUser() {
@@ -61,5 +65,27 @@ public class UserController {
         model.addAttribute("user", userService.findOneWithBlogs(name));
         return "user-detail";
     }
+
+    @RequestMapping(value = "/account",method = RequestMethod.POST)
+    public String doAddBlog(@ModelAttribute("blog") Blog blog, Principal principal) {
+        String name = principal.getName();
+        blogService.save(blog, name);
+        return "redirect:/account.html";
+    }
+
+    @RequestMapping(value = "/blog/remove/{id}")
+    public String removeBlog(@PathVariable int id){
+        Blog blog = blogService.findOne(id);
+        blogService.delete(blog);
+        return "redirect:/account.html";
+    }
+
+    @RequestMapping("/user/remove/{id}")
+    public String removeUser(@PathVariable int id) {
+        userService.delete(id);
+        return "redirect:/users.html";
+    }
+
+
 
 }

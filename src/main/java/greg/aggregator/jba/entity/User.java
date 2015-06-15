@@ -27,7 +27,7 @@ public class User {
     @JoinTable
     private Set<Role> roles;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Blog> blogs;
 
     private Boolean enabled;
