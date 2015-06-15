@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="../layout/taglib.jsp" %>
 
-<form:form commandName="user" cssClass="form-horizontal">
+<form:form commandName="user" cssClass="form-horizontal registraionForm">
 
     <c:if test="${param.success eq true}">
         <div class="alert alert-success">Registration successfull!</div>
@@ -32,8 +32,52 @@
         </div>
     </div>
     <div class="form-group">
+        <label for="password_again" class="col-sm-2 control-label">Password again:</label>
+
+        <div class="col-sm-10">
+            <input type="password" name="password_again" id="password_again" class="form-control">
+        </div>
+    </div>
+    <div class="form-group">
         <div class="col-sm-2">
             <input type="submit" value="Save" class="btn btn-lg btn-primary"/>
         </div>
     </div>
 </form:form>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.registraionForm').validate({
+            rules: {
+                name: {
+                    required: true,
+                    minlength: 3
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                password: {
+                    required: true,
+                    minlength: 5
+                },
+                password_again: {
+                    required: true,
+                    minlength: 5,
+                    equalTo: '#password'
+                }
+            },
+            highlight: function (e) {
+                $(e).closest('.form-group')
+                        .removeClass('has-success')
+                        .addClass('has-error');
+            },
+            unhighlight: function (e) {
+                $(e).closest('.form-group')
+                        .removeClass('has-error')
+                        .addClass('has-success');
+            }
+
+        })
+    })
+</script>
