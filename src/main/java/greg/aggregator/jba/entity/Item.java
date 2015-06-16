@@ -2,6 +2,7 @@ package greg.aggregator.jba.entity;
 
 import lombok.Data;
 import lombok.ToString;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -18,8 +19,12 @@ public class Item {
     @GeneratedValue
     private Integer id;
 
+    @Column(length = 1000)
     private String title;
 
+    @Lob
+    @Type(type = "org.hibernate.type.StringClobType")
+    @Column(length = Integer.MAX_VALUE)
     private String description;
 
     @Column(name = "published_date")
@@ -29,6 +34,7 @@ public class Item {
     @JoinColumn(name = "blog_id")
     private Blog blog;
 
+    @Column(length = 1000)
     private String link;
 
 }

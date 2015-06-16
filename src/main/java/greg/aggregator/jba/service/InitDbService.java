@@ -1,7 +1,6 @@
 package greg.aggregator.jba.service;
 
 import greg.aggregator.jba.entity.Blog;
-import greg.aggregator.jba.entity.Item;
 import greg.aggregator.jba.entity.Role;
 import greg.aggregator.jba.entity.User;
 import greg.aggregator.jba.repository.BlogRepository;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -39,36 +37,39 @@ public class InitDbService {
 
     @PostConstruct
     public void init() {
-        User userAdmin = new User();
-        userAdmin.setName("admin");
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        userAdmin.setPassword(encoder.encode("admin"));
-        userAdmin.setEnabled(true);
-        Set<Role> roles = new HashSet<Role>();
-        roles.add(createRole("ROLE_USER"));
-        roles.add(createRole("ROLE_ADMIN"));
-        userAdmin.setRoles(roles);
-        userRepository.save(userAdmin);
+        if (roleRepository.findByName("ROLE_ADMIN") == null) {
 
-        Blog blogJavaVids = new Blog();
-        blogJavaVids.setName("JavaVids");
-        blogJavaVids.setUrl("http://feeds.feedburner.com/javavids?format=xml");
-        blogJavaVids.setUser(userAdmin);
-        blogRepository.save(blogJavaVids);
+            User userAdmin = new User();
+            userAdmin.setName("admin");
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            userAdmin.setPassword(encoder.encode("admin"));
+            userAdmin.setEnabled(true);
+            Set<Role> roles = new HashSet<Role>();
+            roles.add(createRole("ROLE_USER"));
+            roles.add(createRole("ROLE_ADMIN"));
+            userAdmin.setRoles(roles);
+            userRepository.save(userAdmin);
 
-        Item item1 = new Item();
-        item1.setBlog(blogJavaVids);
-        item1.setTitle("first");
-        item1.setLink("http://www.javavids.com");
-        item1.setPublishedDate(new Date());
-        itemRepository.save(item1);
+            Blog blogJavaVids = new Blog();
+            blogJavaVids.setName("JavaVids");
+            blogJavaVids.setUrl("http://feeds.feedburner.com/javavids?format=xml");
+            blogJavaVids.setUser(userAdmin);
+            blogRepository.save(blogJavaVids);
 
-        Item item2 = new Item();
-        item2.setBlog(blogJavaVids);
-        item2.setTitle("second");
-        item2.setLink("http://www.javavids.com");
-        item2.setPublishedDate(new Date());
-        itemRepository.save(item2);
+//        Item item1 = new Item();
+//        item1.setBlog(blogJavaVids);
+//        item1.setTitle("first");
+//        item1.setLink("http://www.javavids.com");
+//        item1.setPublishedDate(new Date());
+//        itemRepository.save(item1);
+//
+//        Item item2 = new Item();
+//        item2.setBlog(blogJavaVids);
+//        item2.setTitle("second");
+//        item2.setLink("http://www.javavids.com");
+//        item2.setPublishedDate(new Date());
+//        itemRepository.save(item2);
+        }
     }
 
     private Role createRole(String name) {

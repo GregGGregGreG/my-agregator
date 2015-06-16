@@ -14,6 +14,7 @@ import java.util.Set;
  * Created by greg on 05.06.15.
  */
 @Entity
+@Table(name = "app_user")
 @Data
 @ToString(exclude = {"roles","blogs"})
 public class User {

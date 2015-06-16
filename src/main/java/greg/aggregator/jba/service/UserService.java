@@ -45,6 +45,7 @@ public class UserService {
     public User findOne(int id) {
         return userRepository.findOne(id);
     }
+
     public User findOne(String username) {
         return userRepository.findByName(username);
     }
