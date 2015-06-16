@@ -1,5 +1,6 @@
 package greg.aggregator.jba.entity;
 
+import greg.aggregator.jba.annotation.UniqueUsername;
 import lombok.Data;
 import lombok.ToString;
 import org.hibernate.validator.constraints.Email;
@@ -21,6 +22,8 @@ public class User {
     private Integer id;
 
     @Size(min = 3, message = "Name must be at 3 characters!")
+    @Column(unique = true)
+    @UniqueUsername(message = "Such username already exist!")
     private String name;
 
     @Size(min = 1, message = "Invalid email address!")
